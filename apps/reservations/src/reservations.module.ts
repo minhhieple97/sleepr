@@ -8,6 +8,8 @@ import {
   ReservationSchema,
 } from './models/reservation.schema';
 import { LoggerModule } from '@app/common/logger';
+import { ConfigModule } from '@nestjs/config';
+import environment from '../config/environment';
 
 @Module({
   imports: [
@@ -16,6 +18,7 @@ import { LoggerModule } from '@app/common/logger';
       { name: ReservationDocument.name, schema: ReservationSchema },
     ]),
     LoggerModule,
+    ConfigModule.forRoot({ isGlobal: true, load: [environment] }),
   ],
   controllers: [ReservationsController],
   providers: [ReservationsService, ReservationsRepository],
