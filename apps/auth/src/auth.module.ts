@@ -7,17 +7,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import environment from './config/environment';
 import { LocalStrategy } from './strategies/local.strategy';
-import { UsersRepository } from './users/users.repository';
-import { DatabaseModule } from '@app/common';
-import { UsersService } from './users/users.service';
-import { UserDocument, UserSchema } from './users/models/user.schema';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
-    DatabaseModule,
-    DatabaseModule.forFeature([
-      { name: UserDocument.name, schema: UserSchema },
-    ]),
     UsersModule,
     LoggerModule,
     ConfigModule.forRoot({ isGlobal: true, load: [environment] }),
@@ -34,6 +27,6 @@ import { UserDocument, UserSchema } from './users/models/user.schema';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UsersService, LocalStrategy, UsersRepository],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}
