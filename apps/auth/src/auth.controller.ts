@@ -5,6 +5,7 @@ import { CurrentUser } from './decorators/current-user.decorator';
 import { UserDocument } from './users/models/user.schema';
 import { Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('auth')
 export class AuthController {
@@ -24,5 +25,11 @@ export class AuthController {
   @Get('current-user')
   async getCurrentUser(@CurrentUser() user: UserDocument) {
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @MessagePattern('authenticate')
+  async authenticate(@Payload() data: any) {
+    return data.user;
   }
 }
