@@ -11,6 +11,18 @@ services:
       - .:/usr/src/app
     env_file:
       - ./apps/reservations/.env
+  payments:
+    build:
+      context: .
+      dockerfile: ./apps/payments/Dockerfile
+      target: development
+    command: pnpm run start:dev payments
+    ports:
+      - '3004:3004'
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - ./apps/payments/.env
   auth:
     build:
       context: .
