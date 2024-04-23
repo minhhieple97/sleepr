@@ -25,5 +25,9 @@ export class AuthService {
       httpOnly: true,
       expires: tokenExpireTime,
     });
+    return {
+      userId: user._id,
+      email: user.email,
+    };
   }
 }
