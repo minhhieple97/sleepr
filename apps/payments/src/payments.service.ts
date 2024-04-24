@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Inject, Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
-import { CreateChargeDto, NOTIFICATIONS_SERVICE } from '@app/common';
+import { NOTIFICATIONS_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { PaymentCreateChargeDto } from '../dto';
 
@@ -29,6 +29,7 @@ export class PaymentsService {
     });
     this.notificationsService.emit('notify_email', {
       email,
+      text: `Your payment of $${amount} USD has been received.`,
     });
     return paymentIntent;
   }

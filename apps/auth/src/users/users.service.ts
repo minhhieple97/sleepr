@@ -13,10 +13,14 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
   async createUser(createUserDto: CreateUserDto) {
     await this.validateCreateUserDto(createUserDto);
-    return this.usersRepository.create({
+    const user = await this.usersRepository.create({
       ...createUserDto,
       password: await bcrypt.hash(createUserDto.password, 10),
     });
+    return {
+      userId: user._id,
+      email: user.email,
+    };
   }
   async validateCreateUserDto(createUserDto: CreateUserDto) {
     const user = await this.usersRepository.findOne({
@@ -31,10 +35,7 @@ export class UsersService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credential');
     }
-    return {
-      id: user._id,
-      email: user.email,
-    };
+    return user;
   }
   getUser(getUserDto: GetUserDto) {
     const { id } = getUserDto;
