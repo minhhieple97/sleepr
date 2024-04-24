@@ -5,13 +5,13 @@ export interface IAppConfig {
   AUTH_PORT: number;
   PAYMENTS_HOST: string;
   PAYMENTS_PORT: 3003;
-  PORT: number;
+  HTTP_PORT: number;
 }
 
 export default (): IAppConfig => {
   const {
     MONGODB_URI,
-    PORT,
+    HTTP_PORT,
     AUTH_HOST,
     AUTH_PORT,
     PAYMENTS_HOST,
@@ -20,7 +20,7 @@ export default (): IAppConfig => {
 
   const envVariables = {
     MONGODB_URI,
-    PORT,
+    HTTP_PORT,
     AUTH_HOST,
     AUTH_PORT,
     PAYMENTS_HOST,
@@ -28,7 +28,7 @@ export default (): IAppConfig => {
   };
   const schema = Joi.object<IAppConfig, true>({
     MONGODB_URI: Joi.string().uri().required(),
-    PORT: Joi.number().required(),
+    HTTP_PORT: Joi.number().required(),
     AUTH_HOST: Joi.string().required(),
     AUTH_PORT: Joi.number().required(),
     PAYMENTS_HOST: Joi.string().required(),
