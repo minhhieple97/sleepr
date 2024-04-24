@@ -20,10 +20,6 @@ export class CreateReservationDto {
 
   @IsString()
   @IsNotEmpty()
-  placeId: string;
-
-  @IsString()
-  @IsNotEmpty()
   invoiceId: string;
 
   @IsDefined()
