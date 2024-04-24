@@ -31,7 +31,10 @@ export class UsersService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credential');
     }
-    return user;
+    return {
+      id: user._id,
+      email: user.email,
+    };
   }
   getUser(getUserDto: GetUserDto) {
     const { id } = getUserDto;
